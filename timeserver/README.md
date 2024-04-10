@@ -105,6 +105,21 @@ or
 curl <external-ip>:8080
 ```
 
+To make the service accessible from outside the cluster, you can use kubectl to
+establish a port forwarding for the service:
+
+```bash
+kubectl port-forward service/timeserver 8888:8080 --address 0.0.0.0
+```
+
+You can also port-forward to the deployment directly:
+
+```bash
+kubectl port-forward deploy/timeserver 8888:80 --address 0.0.0.0
+```
+
+In either way you should be able to access the services with either the
+`http://localhost:8888` or `http://<hostname>:8888` URLs.
 
 ## Deploying Changes
 
