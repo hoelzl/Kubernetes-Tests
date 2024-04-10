@@ -25,8 +25,9 @@ class RequestHandler(BaseHTTPRequestHandler):
         self.send_header("Content-type", "application/json")
         self.end_headers()
         now = datetime.now()
-        response = {"time": now.strftime("%H:%M:%S"), "timezone": "UTC"}
-        self.wfile.write(json.dumps(response).encode("utf-8"))
+        response_json = {"time": now.strftime("%H:%M:%S"), "timezone": "UTC"}
+        response_str = json.dumps(response_json) + "\n"
+        self.wfile.write(response_str.encode("utf-8"))
 
 
 def run(server_class=ThreadingHTTPServer, handler_class=RequestHandler):
