@@ -49,7 +49,7 @@ Forward a port from our local machine to the container:
 kubectl port-forward deploy/timeserver 8080:80
 ```
 
-In another terminal, you can now access the TimeServer:
+In another terminal, you can now access the TimeServer.
 
 ```bash
 curl localhost:8080
@@ -91,11 +91,20 @@ To check the status of the service, run:
 kubectl get service
 ```
 
-Now you can access the TimeServer through the service:
+Now you can access the TimeServer through the service. Depending on the external
+IP of the service shown in the above output, you can access the TimeServer with
+the following command:
 
 ```bash
 curl localhost:8080
 ```
+
+or
+
+```bash
+curl <external-ip>:8080
+```
+
 
 ## Deploying Changes
 

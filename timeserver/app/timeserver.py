@@ -17,7 +17,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         self.send_header("Content-type", "text/plain")
         self.end_headers()
         now = datetime.now()
-        response = now.strftime("The time is: %H:%M:%S, UTC")
+        response = now.strftime("The time is: %H:%M:%S, UTC\n")
         self.wfile.write(response.encode("utf-8"))
 
     def do_GET_v2(self):
