@@ -10,3 +10,6 @@ Various examples and tests for running applications on Kubernetes.
 - [timeserver-v2](timeserver-v2/README.md): A time server with health checks
   for zero-downtime updates. Demonstrates how to implement health checks in an
   application and how to configure Kubernetes to use them.
+- [timeserver-v3](timeserver-v3/README.md): A time server with health checks
+  that don't fail. Demonstrates how to update an application without downtime
+  by using rolling updates.

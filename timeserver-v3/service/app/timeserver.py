@@ -3,11 +3,9 @@ from datetime import datetime, timedelta
 from random import random
 import json
 
-VERSION = "0.0.3"
+VERSION = "0.0.4"
 
 last_ready_time = datetime.now()
-failure_rate = 0.1
-service_ok = True
 
 
 class RequestHandler(BaseHTTPRequestHandler):
@@ -32,7 +30,7 @@ class RequestHandler(BaseHTTPRequestHandler):
                 else:
                     self.send_reply({"status": "Alive"})
             case "/admin/ready":
-                service_ok = service_ok and (random() > failure_rate)
+                service_ok = True  # This would be a check of the service's health
                 if service_ok:
                     last_ready_time = datetime.now()
                     self.send_reply({"status": "Ready"})
