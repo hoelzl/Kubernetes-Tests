@@ -1,0 +1,80 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<style>
+    .container {
+        display: flex;
+        align-items: center;
+    }
+
+    .text {
+        flex: 0 0 60%;
+        padding-right: 20px;
+    }
+
+    .image {
+        flex: 0 0 40%;
+        padding-right: 20px;
+    }
+
+    .image img {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+
+<h1>Robot Worker @Model.Worker.Name</h1>
+<div class="container">
+    <div class="image">
+        <img src="@Model.ImageUrl" alt="Robot Image"/>
+    </div>
+
+    <div class="text">
+        <table>
+            <thead>
+            <tr>
+                <th>Property</th>
+                <th>Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Name</td><td>@Model.Worker.Name</td>
+            </tr>
+            <tr>
+                <td>Model</td><td>@Model.Worker.Model</td>
+            </tr>
+            <tr>
+                <td>Manufacturer</td>
+                <td>@Model.Worker.Manufacturer</td>
+            </tr>
+            <tr>
+                <td>Serial number</td>
+                <td>@Model.Worker.SerialNumber</td>
+            </tr>
+            <tr>
+                <td>Occupation</td>
+                <td>@Model.Worker.Occupation</td>
+            </tr>
+            <tr>
+                <td>Quality rating</td>
+                <td>@Model.Worker.QualityRating</td>
+            </tr>
+            <tr>
+                <td>Efficiency rating</td>
+                <td>@Model.Worker.EfficiencyRating</td>
+            </tr>
+            <tr>
+                <td>Price per hour</td>
+                <td>@Model.Worker.PricePerHour</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<form method="post">
+    <button type="submit" asp-page-handler="Refresh">Refresh</button>
+</form>

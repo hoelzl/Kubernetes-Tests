@@ -1,4 +1,6 @@
-﻿namespace RobotWorkers;
+﻿using System.Text.Json.Serialization;
+
+namespace RobotWorkers;
 
 public class RobotWorker
 {
@@ -20,6 +22,7 @@ public class RobotWorker
     public decimal QualityRating { get; set; }
     public decimal EfficiencyRating { get; set; }
 
+    [JsonInclude]
     public decimal PricePerHour =>
         Math.Round(20 + QualityRating * 0.4m + EfficiencyRating * 0.25m + _random.Next(1, 25));
 

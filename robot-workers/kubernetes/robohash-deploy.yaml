@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: robohash
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      pod: robohash-pod
+  template:
+    metadata:
+      labels:
+        pod: robohash-pod
+    spec:
+      containers:
+      - name: robohash-container
+        image: wdenniss/robohash:1

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: razor-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      pod: razor-frontend-pod
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        pod: razor-frontend-pod
+    spec:
+      containers:
+      - name: razor-frontend-container
+        image: mhoelzl/robot-worker-frontend:0.0.1
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Development"
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 1
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 20
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 2
