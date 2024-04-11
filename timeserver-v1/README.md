@@ -1,11 +1,11 @@
-# Building and Deploying the TimeServer
+# Building and Deploying the Time Server V1
 
 ## Building the Docker image for the initial version
 
 Ensure that the line `Version = "0.0.1"` is uncommented in `timeserver.py` and
 that the line `# Version = "0.0.2"` is commented out.
 
-Then build the Docker image for the TimeServer:
+Then build the Docker image for the time server:
 
 ```bash
 docker build . --tag mhoelzl/timeserver:0.0.1
@@ -17,7 +17,7 @@ Push the Docker image to Docker Hub:
 docker push mhoelzl/timeserver:0.0.1
 ```
 
-Deploy the TimeServer to Kubernetes:
+Deploy the time server to Kubernetes:
 
 ```bash
 kubectl create -f deploy.yaml --save-config
@@ -35,13 +35,13 @@ Check the status of the pods:
 kubectl get pods
 ```
 
-If you have other pods running and want to focus on the TimeServer pods:
+If you have other pods running and want to focus on the time server pods:
 
 ```bash
 kubectl get pods --selector=pod=timeserver-pod
 ```
 
-## Temporary Access to the TimeServer
+## Temporary Access to the Time Server
 
 Forward a port from our local machine to the container:
 
@@ -49,7 +49,7 @@ Forward a port from our local machine to the container:
 kubectl port-forward deploy/timeserver 8080:80
 ```
 
-In another terminal, you can now access the TimeServer.
+In another terminal, you can now access the time server.
 
 ```bash
 curl localhost:8080
@@ -57,7 +57,7 @@ curl localhost:8080
 
 ## Logging
 
-To log access to the TimeServer run the following command:
+To log access to the time server run the following command:
 
 ```bash
 kubectl logs -f deploy/timeserver
@@ -79,7 +79,7 @@ Stop the port forwarding by pressing `Ctrl-C` in the terminal in which you
 started the port forwarding. You can check, that the port forwarding is stopped
 by running `curl localhost:8080` again. It should fail.
 
-To expose the TimeServer as a service, run the following command:
+To expose the time server as a service, run the following command:
 
 ```bash
 kubectl create -f service.yaml --save-config
@@ -91,8 +91,8 @@ To check the status of the service, run:
 kubectl get service
 ```
 
-Now you can access the TimeServer through the service. Depending on the external
-IP of the service shown in the above output, you can access the TimeServer with
+Now you can access the time server through the service. Depending on the external
+IP of the service shown in the above output, you can access the time server with
 the following command:
 
 ```bash
@@ -136,13 +136,13 @@ Push the new Docker image to Docker Hub:
 docker push mhoelzl/timeserver:0.0.2
 ```
 
-Run the following command to update the TimeServer deployment:
+Run the following command to update the time server deployment:
 
 ```bash
 kubectl apply -f deploy-v2.yaml
 ```
 
-## Interacting with the TimeServer Pods
+## Interacting with the Time Server Pods
 
 To get a shell in a pod, run the following command:
 
@@ -162,7 +162,7 @@ name`.
 
 ## Cleaning Up
 
-To delete the TimeServer deployment and service, run the following commands:
+To delete the time server deployment and service, run the following commands:
 
 ```bash
 kubectl delete deploy timeserver
