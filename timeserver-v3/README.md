@@ -47,13 +47,13 @@ To see that both versions of the time server are running at the same time, you
 can run the following command while the services are rolled out. On Linux/WSL:
 
 ```bash
-while true; do curl -s http://localhost:8080; sleep 0.2; done
+while true; do curl -s http://localhost:8080; echo ""; sleep 0.2; done
 ```
 
 On Windows using PowerShell, you can use:
 
 ```powershell
-while ($true) { curl.exe -s http://localhost:8080; Start-Sleep -Milliseconds 200 }
+while ($true) { curl.exe -s http://localhost:8080; echo ""; Start-Sleep -Milliseconds 200 }
 ```
 
 Before the rollout, all messages should have version number `0.0.3`. During the

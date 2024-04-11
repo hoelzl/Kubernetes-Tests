@@ -43,8 +43,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         self.send_response(status)
         self.send_header("Content-type", "application/json")
         self.end_headers()
-        response_str = json.dumps(data) + "\n"
-        self.wfile.write(response_str.encode("utf-8"))
+        self.wfile.write(json.dumps(data).encode("utf-8"))
 
 
 def run(server_class=ThreadingHTTPServer, handler_class=RequestHandler):

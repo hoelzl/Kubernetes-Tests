@@ -1,60 +1,61 @@
-from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
+from fastapi import FastAPI, status
+from fastapi.responses import JSONResponse
 from datetime import datetime, timedelta
-from random import random
-import json
+from pydantic import BaseModel
+
+app = FastAPI()
 
 VERSION = "0.0.4"
 
 last_ready_time = datetime.now()
+service_ok = True
 
 
-class RequestHandler(BaseHTTPRequestHandler):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-    def do_GET(self):
-        global last_ready_time
-        global service_ok
-        match self.path:
-            case "/" | "/time":
-                now = datetime.now()
-                response_json = {
-                    "time": now.strftime("%H:%M:%S"),
-                    "timezone": "UTC",
-                    "version": VERSION,
-                }
-                self.send_reply(response_json)
-            case "/admin/alive":
-                if datetime.now() > last_ready_time + timedelta(seconds=30):
-                    self.send_reply({"status": "Not Alive"}, status=503)
-                else:
-                    self.send_reply({"status": "Alive"})
-            case "/admin/ready":
-                service_ok = True  # This would be a check of the service's health
-                if service_ok:
-                    last_ready_time = datetime.now()
-                    self.send_reply({"status": "Ready"})
-                else:
-                    self.send_reply({"status": "Not Ready"}, status=503)
-
-    def send_reply(self, data, status=200):
-        self.send_response(status)
-        self.send_header("Content-type", "application/json")
-        self.end_headers()
-        response_str = json.dumps(data) + "\n"
-        self.wfile.write(response_str.encode("utf-8"))
+class TimeResponse(BaseModel):
+    time: str
+    timezone: str
+    version: str
 
 
-def run(server_class=ThreadingHTTPServer, handler_class=RequestHandler):
-    try:
-        server_address = ("", 80)
-        httpd = server_class(server_address, handler_class)
-        print(f"Listening on {httpd.server_address[0]}:{httpd.server_address[1]}...")
-        httpd.serve_forever()
-    except KeyboardInterrupt:
-        print("\nShutting down the server...")
-        httpd.shutdown()
+class StatusResponse(BaseModel):
+    status: str
+
+
+@app.get("/", response_model=TimeResponse)
+@app.get("/time", response_model=TimeResponse)
+def get_time():
+    now = datetime.now()
+    return TimeResponse(
+        time=now.strftime("%H:%M:%S"),
+        timezone="UTC",
+        version=VERSION,
+    )
+
+
+@app.get("/admin/alive", response_model=StatusResponse)
+def check_alive():
+    global last_ready_time
+    if datetime.now() > last_ready_time + timedelta(seconds=30):
+        return JSONResponse(
+            content={"status": "Not Alive"},
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+        )
+    return StatusResponse(status="Alive")
+
+
+@app.get("/admin/ready", response_model=StatusResponse)
+def check_ready():
+    global last_ready_time
+    global service_ok
+    if service_ok:
+        last_ready_time = datetime.now()
+        return StatusResponse(status="Ready")
+    return JSONResponse(
+        content={"status": "Not Ready"}, status_code=status.HTTP_503_SERVICE_UNAVAILABLE
+    )
 
 
 if __name__ == "__main__":
-    run()
+    import uvicorn
+
+    uvicorn.run(app, host="0.0.0.0", port=80)
