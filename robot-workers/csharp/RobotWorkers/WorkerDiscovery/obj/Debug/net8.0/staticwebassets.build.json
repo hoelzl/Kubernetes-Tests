@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "SfVP/29H9fWo1DDjj5UtvdcbxlNh1YB3wYvqYQfeLNE=",
+  "Source": "WorkerDiscovery",
+  "BasePath": "_content/WorkerDiscovery",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

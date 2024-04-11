@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "LXQzeTDxxI5a58/AcSwvZbtOwcUY+bzK4U+wCYe++28YSy05a1Kkuf1YyUGafkpu6j9QN4X+2t3K0lfjIm4tvw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\tc\\Programming\\Docker\\Tests\\Kubernetes-Test\\robot-workers\\csharp\\RobotWorkers\\WorkerDiscovery\\WorkerDiscovery.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\tc\\.nuget\\packages\\bogus\\35.5.0\\bogus.35.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}
